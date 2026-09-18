@@ -1,53 +1,53 @@
 
-const images = document.querySelectorAll(".layer-1 img")
-const imagens = Array.from(images);
-let interagindo = false;
+const cards = document.querySelectorAll(".flip-card");
 
+const cardsInner = document.querySelectorAll(".flip-inner");
+const cardsAuto = Array.from(cardsInner);
 
-for (let imagem of imagens){
+cards.forEach(card => {
 
-    gsap.set(imagem, {
-        opacity: 1
+    const inner = card.querySelector(".flip-inner");
+
+    card.addEventListener("mouseenter", () => {
+
+        gsap.to(inner, {
+            rotationY: 180,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
     });
 
-    imagem.addEventListener('mouseenter', ()=>{
-        interagindo = true;
-        gsap.to(imagem,{
-            opacity: 0,
-            duration: 0.5,
-            ease: "power2.out",
-            overwrite: true
-        });
-        console.log(interagindo);
-    })
+    card.addEventListener("mouseleave", () => {
 
-    imagem.addEventListener('mouseleave', ()=>{
-        interagindo = false;
-        gsap.to(imagem,{
-            opacity: 1,
-            duration: 0.2,
-            ease: "power2.out",
-            overwrite: true
+        gsap.to(inner, {
+            rotationY: 0,
+            duration: 1,
+            delay: 0.5,
+            ease: "power2.inOut"
         });
-        console.log(interagindo);
-    })
-}
+
+    });
+
+});
 
 function showRandomPic(){
+
     const tl = gsap.timeline();
-    let randomInt = Math.floor(Math.random() * imagens.length + 1); 
+    let randomInt = Math.floor(Math.random() * cardsAuto.length); 
 
     console.log("Imagem Aleatória exibida!");
 
-    tl.to(imagens[randomInt],{
-        opacity: 0,
-        duration: 0.5,
-        ease: "power2.out",
+    tl.to(cardsAuto[randomInt],{
+        rotationY: 180,
+        duration: 1,
+        ease: "power2.inOut"
     })
-    tl.to(imagens[randomInt],{
-        opacity: 1,
-        duration: 0.5,
-        ease: "power2.out",
+    
+    tl.to(cardsAuto[randomInt],{
+        rotationY: 0,
+        duration: 1,
+        ease: "power2.inOut"
     }, "+3")
 }
 
